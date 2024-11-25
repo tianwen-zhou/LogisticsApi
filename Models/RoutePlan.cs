@@ -5,6 +5,5 @@ namespace LogisticsApi.Models
         public int Id { get; set; }
         public string PlanName { get; set; }
         public int DriverId { get; set; }
-        public Driver Driver { get; set; }
     }
 }
