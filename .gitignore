@@ -1,0 +1,54 @@
+# Ignore build output
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs and database
+*.log
+*.sqlite
+*.sqlite-journal
+
+# Visual Studio Code files
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Rider files
+.idea/
+.idea/*
+
+# Dotnet tool directories
+.dotnet/
+.tools/
+
+# Dependency directories
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Debug and release folders
+Debug/
+Release/
+
