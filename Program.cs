@@ -4,6 +4,18 @@ using Microsoft.OpenApi.Models; // Required for Swagger
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 添加 CORS 服务
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173") // React 前端地址
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .WithExposedHeaders("X-Total-Count"); // 暴露自定义头
+    });
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -42,5 +54,8 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<LogisticsDbContext>();
     dbContext.Database.EnsureCreated();
 }
+
+// 启用 CORS
+app.UseCors("AllowSpecificOrigins");
 
 app.Run();

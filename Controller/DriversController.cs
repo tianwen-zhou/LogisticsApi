@@ -14,11 +14,26 @@ public class DriversController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Drivers
+    // GET: api/Drivers?_start=0&_end=10
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Driver>>> GetDrivers()
+    public async Task<ActionResult<IEnumerable<Driver>>> GetDrivers(
+        [FromQuery] int _start = 0, 
+        [FromQuery] int _end = 10)
     {
-        return await _context.Drivers.ToListAsync();
+        // 获取总记录数
+        var totalCount = await _context.Drivers.CountAsync();
+
+        // 获取分页数据
+        var drivers = await _context.Drivers
+            .OrderBy(d => d.Id) // 按 ID 排序（React-Admin 需要稳定排序）
+            .Skip(_start)       // 跳过前 _start 条记录
+            .Take(_end - _start) // 获取 _end - _start 条记录
+            .ToListAsync();
+
+        // 添加 X-Total-Count 响应头
+        HttpContext.Response.Headers.Add("X-Total-Count", totalCount.ToString());
+
+        return Ok(drivers);
     }
 
     // GET: api/Drivers/5
