@@ -1,10 +1,18 @@
-public class TaskWaybill
+
+namespace LogisticsApi.Models
 {
-    public int Id { get; set; } // 主键
-    
-    public int TaskId { get; set; }         // 外键，指向 Task
+    public class TaskWaybill
+    {
+        public int Id { get; set; } // 主键
 
-    public int WaybillId { get; set; }     // 外键，指向 Waybill
+        public string TaskNumber { get; set; } // 外键，指向 Task
 
-    public string Status { get; set; }     // 关联状态
+        public string WaybillNumber { get; set; } // 外键，指向 Waybill
+
+        public int Status { get; set; } // 关联状态
+
+        // 新增字段
+        public int Order { get; set; } // 排序字段，用于指定任务中的运单顺序
+    }
+
 }

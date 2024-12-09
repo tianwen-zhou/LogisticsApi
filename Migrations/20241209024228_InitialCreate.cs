@@ -75,7 +75,10 @@ namespace LogisticsApi.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PlanName = table.Column<string>(type: "TEXT", nullable: false),
-                    DriverId = table.Column<int>(type: "INTEGER", nullable: false)
+                    DriverId = table.Column<int>(type: "INTEGER", nullable: false),
+                    TaskNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    Version = table.Column<int>(type: "INTEGER", nullable: false),
+                    Status = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,9 +91,10 @@ namespace LogisticsApi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TaskId = table.Column<int>(type: "INTEGER", nullable: false),
-                    WaybillId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Status = table.Column<string>(type: "TEXT", nullable: false)
+                    TaskNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    WaybillNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    Order = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
