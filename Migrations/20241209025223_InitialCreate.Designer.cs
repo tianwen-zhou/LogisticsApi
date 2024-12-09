@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogisticsApi.Migrations
 {
     [DbContext(typeof(LogisticsDbContext))]
-    [Migration("20241209024228_InitialCreate")]
+    [Migration("20241209025223_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -213,6 +213,12 @@ namespace LogisticsApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("RecipientLatitude")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("RecipientLongitude")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("RecipientPhone")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -228,6 +234,12 @@ namespace LogisticsApi.Migrations
                     b.Property<string>("SenderAddress")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<double>("SenderLatitude")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("SenderLongitude")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("SenderPhone")
                         .IsRequired()

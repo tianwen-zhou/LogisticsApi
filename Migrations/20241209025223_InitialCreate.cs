@@ -117,7 +117,11 @@ namespace LogisticsApi.Migrations
                     PostCode = table.Column<string>(type: "TEXT", nullable: false),
                     RouteCode = table.Column<string>(type: "TEXT", nullable: false),
                     ParcelValue = table.Column<decimal>(type: "TEXT", nullable: false),
-                    DeliveryTime = table.Column<string>(type: "TEXT", nullable: false)
+                    DeliveryTime = table.Column<string>(type: "TEXT", nullable: false),
+                    SenderLatitude = table.Column<double>(type: "REAL", nullable: false),
+                    SenderLongitude = table.Column<double>(type: "REAL", nullable: false),
+                    RecipientLatitude = table.Column<double>(type: "REAL", nullable: false),
+                    RecipientLongitude = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
