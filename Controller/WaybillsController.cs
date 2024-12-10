@@ -35,6 +35,19 @@ public class WaybillsController : ControllerBase
         return Waybill;
     }
 
+    // 执行自定义 SQL 查询获取运单列表
+    [HttpGet("custom/{PostCode}")]
+    public async Task<IActionResult> GetCustomWaybills(string PostCode)
+    {
+        // 使用 FromSqlRaw 执行 SQL 查询并映射到 Waybill 实体
+        var waybills = await _context.Waybills
+            .FromSqlRaw("SELECT * FROM Waybills WHERE PostCode = {0}",PostCode)
+            .ToListAsync();
+
+        return Ok(waybills);
+    }
+
+
     // POST: api/Waybills
     [HttpPost]
     public async Task<ActionResult<Waybill>> PostWaybill(Waybill Waybill)

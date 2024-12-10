@@ -8,6 +8,7 @@ namespace LogisticsApi.Data
         public LogisticsDbContext(DbContextOptions<LogisticsDbContext> options) : base(options) { }
 
         public DbSet<Waybill> Waybills { get; set; }
+
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<PostalArea> PostalAreas { get; set; }
         public DbSet<DeliveryTask> DeliveryTasks { get; set; }
