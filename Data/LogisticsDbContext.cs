@@ -14,6 +14,7 @@ namespace LogisticsApi.Data
         public DbSet<DeliveryTask> DeliveryTasks { get; set; }
         public DbSet<RoutePlan> RoutePlans { get; set; }
         public DbSet<TaskWaybill> TaskWaybills { get; set; }
+        public DbSet<User> Users { get; set; } // 用户表
 
 
         // protected override void OnModelCreating(ModelBuilder modelBuilder)
