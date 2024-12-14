@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LogisticsApi.Data;
 using LogisticsApi.Models;
+using LogisticsApi.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
