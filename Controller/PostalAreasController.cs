@@ -16,9 +16,24 @@ public class PostalAreasController : ControllerBase
 
     // GET: api/PostalAreas
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<PostalArea>>> GetPostalAreas()
+    public async Task<ActionResult<IEnumerable<PostalArea>>> GetPostalAreas(
+        [FromQuery] int _start = 0, 
+        [FromQuery] int _end = 10)
     {
-        return await _context.PostalAreas.ToListAsync();
+        var totalCount = await _context.PostalAreas.CountAsync();
+        // 获取分页数据
+        var postalAreas = await _context.PostalAreas
+            .OrderBy(d => d.Id) // 按 ID 排序（React-Admin 需要稳定排序）
+            .Skip(_start)       // 跳过前 _start 条记录
+            .Take(_end - _start) // 获取 _end - _start 条记录
+            .ToListAsync();
+
+        // 返回结果
+        return Ok(new
+        {
+            data = postalAreas,
+            total = totalCount
+        });
     }
 
     // GET: api/PostalAreas/5

@@ -15,32 +15,9 @@ namespace LogisticsAPI.Controllers
 
         private readonly LogisticsDbContext _context;
 
-        private readonly HttpClient _httpClient;
-        private readonly string _googleApiKey = "YOUR_GOOGLE_API_KEY";
-
-        public RouteController(HttpClient httpClient, LogisticsDbContext context)
+        public RouteController(LogisticsDbContext context)
         {
             _context = context;
-            _httpClient = httpClient;
-        }
-
-        [HttpPost("getRoute")]
-        public async Task<IActionResult> GetRoute([FromBody] List<string> destinations)
-        {
-            if (destinations == null || destinations.Count < 2)
-                return BadRequest("At least two addresses are required.");
-
-            var origin = destinations[0]; // First address as the origin
-            var waypoints = string.Join("|", destinations.GetRange(1, destinations.Count - 1)); // Remaining addresses as waypoints
-
-            var url = $"https://maps.googleapis.com/maps/api/directions/json?origin={origin}&destination={origin}&waypoints={waypoints}&key={_googleApiKey}";
-
-            var response = await _httpClient.GetStringAsync(url);
-
-            if (string.IsNullOrEmpty(response))
-                return BadRequest("Error retrieving route from Google Maps API.");
-
-            return Ok(response); // Return the Google Maps Directions API response
         }
 
         [HttpGet("getTaskRoute/{taskNumber}")]

@@ -21,11 +21,26 @@ namespace LogisticsApi.Controllers
 
         // GET: api/TaskWaybills
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskWaybill>>> GetTaskWaybills()
+        public async Task<ActionResult<IEnumerable<TaskWaybill>>> GetTaskWaybills(
+            [FromQuery] int _start = 0, 
+            [FromQuery] int _end = 10)
         {
-            return await _context.TaskWaybills.ToListAsync();
-        }
+            var totalCount = await _context.TaskWaybills.CountAsync();
+            // 获取分页数据
+            var taskWaybills = await _context.TaskWaybills
+                .OrderBy(d => d.Id) // 按 ID 排序（React-Admin 需要稳定排序）
+                .Skip(_start)       // 跳过前 _start 条记录
+                .Take(_end - _start) // 获取 _end - _start 条记录
+                .ToListAsync();
 
+            // 返回结果
+            return Ok(new
+            {
+                data = taskWaybills,
+                total = totalCount
+            });
+        }
+        
         // GET: api/TaskWaybills/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskWaybill>> GetTaskWaybill(int id)

@@ -31,9 +31,14 @@ public class DriversController : ControllerBase
             .ToListAsync();
 
         // 添加 X-Total-Count 响应头
-        HttpContext.Response.Headers.Add("X-Total-Count", totalCount.ToString());
+        // HttpContext.Response.Headers.Add("X-Total-Count", totalCount.ToString());
 
-        return Ok(drivers);
+                    // 返回结果
+            return Ok(new
+            {
+                data = drivers,
+                total = totalCount
+            });
     }
 
     // GET: api/Drivers/5

@@ -22,10 +22,31 @@ namespace LogisticsApi.Controllers
 
         // GET: api/DeliveryTasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DeliveryTask>>> GetDeliveryTasks()
+        public async Task<ActionResult> GetDeliveryTasks([FromQuery] int page = 1, [FromQuery] int perPage = 10)
         {
-            return await _context.DeliveryTasks.ToListAsync();
+            if (page < 1 || perPage < 1)
+            {
+                return BadRequest("Page and perPage must be greater than 0.");
+            }
+
+            // 查询数据总数
+            var total = await _context.DeliveryTasks.CountAsync();
+
+            // 计算分页数据
+            var tasks = await _context.DeliveryTasks
+                .OrderBy(t => t.Id) // 默认按 ID 排序，可根据需要更改字段
+                .Skip((page - 1) * perPage)
+                .Take(perPage)
+                .ToListAsync();
+
+            // 返回结果
+            return Ok(new
+            {
+                data = tasks,
+                total = total
+            });
         }
+
 
         // GET: api/DeliveryTasks/5
         [HttpGet("{id}")]

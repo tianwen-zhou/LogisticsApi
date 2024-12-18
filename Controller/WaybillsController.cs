@@ -16,10 +16,25 @@ public class WaybillsController : ControllerBase
 
     // GET: api/Waybills
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Waybill>>> GetWaybills()
-    {
-        return await _context.Waybills.ToListAsync();
-    }
+    public async Task<ActionResult<IEnumerable<Waybill>>> GetWaybills(
+            [FromQuery] int _start = 0, 
+            [FromQuery] int _end = 10)
+        {
+            var totalCount = await _context.Waybills.CountAsync();
+            // 获取分页数据
+            var waybills = await _context.Waybills
+                .OrderBy(d => d.Id) // 按 ID 排序（React-Admin 需要稳定排序）
+                .Skip(_start)       // 跳过前 _start 条记录
+                .Take(_end - _start) // 获取 _end - _start 条记录
+                .ToListAsync();
+
+            // 返回结果
+            return Ok(new
+            {
+                data = waybills,
+                total = totalCount
+            });
+        }
 
     // GET: api/Waybills/5
     [HttpGet("{id}")]
