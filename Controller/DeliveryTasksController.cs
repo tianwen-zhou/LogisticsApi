@@ -128,6 +128,64 @@ namespace LogisticsApi.Controllers
         private bool DeliveryTaskExists(int id)
         {
             return _context.DeliveryTasks.Any(e => e.Id == id);
+        }   
+
+        [HttpPost("GenerateTaskByRoute/{routeCode}")]
+        public async Task<ActionResult<DeliveryTask>> GenerateTaskByRoute(string routeCode)
+        {
+            // 确认是否存在给定 RouteCode 的数据
+            var waybills = await _context.Waybills
+                .Where(wb => wb.RouteCode == routeCode  && wb.Status == "1")
+                .ToListAsync();
+
+            if (!waybills.Any())
+            {
+                return NotFound($"No WayBills found for RouteCode: {routeCode}");
+            }
+
+            // 创建新任务
+            var newTask = new DeliveryTask
+            {
+                TaskNumber = Guid.NewGuid().ToString(), // 生成唯一任务号
+                TaskType = "1", // 自定义任务类型
+                TaskStatus = "0", // 默认任务状态
+                AssignedTo = "Unassigned", // 默认分配状态
+                CreatedTime = DateTime.UtcNow,
+                UpdatedTime = DateTime.UtcNow
+            };
+
+            _context.DeliveryTasks.Add(newTask);
+            await _context.SaveChangesAsync();
+
+            // 创建新任务和运单关联数据
+                // 遍历 Waybills 数据并创建对应的 TaskWaybills
+            foreach (var waybill in waybills)
+            {
+                // 检查是否已经存在对应的 TaskWaybill，避免重复生成
+                bool exists = _context.TaskWaybills.Any(tw => tw.WaybillNumber == waybill.WaybillNumber 
+                && tw.TaskNumber == newTask.TaskNumber);
+                if (exists)
+                {
+                    continue;
+                }
+
+                var taskWaybill = new TaskWaybill
+                {
+                    WaybillNumber = waybill.WaybillNumber,
+                    TaskNumber = newTask.TaskNumber, 
+                    Order = 0,
+                    Status = 0
+                };
+
+                _context.TaskWaybills.Add(taskWaybill);
+            }
+
+            // 保存更改到数据库
+            await _context.SaveChangesAsync();
+
+            return Ok("TaskWaybills created successfully.");
         }
+
+    
     }
 }

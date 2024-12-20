@@ -20,6 +20,8 @@ namespace LogisticsApi.Models
         public double SenderLongitude { get; set; } // 寄件人经度
         public double RecipientLatitude { get; set; } // 收件人纬度
         public double RecipientLongitude { get; set; } // 收件人经度
+
+        public string Status { get; set; } // 新增字段
     }
 
 }
