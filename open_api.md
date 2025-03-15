@@ -71,9 +71,9 @@ This API is used to push customer orders to the logistics center system for furt
 | Parameter            | Type     | Description | 
 |----------------------|----------|----------|
 | `code`           | `number` | Status code      | 
-| `message`      | `string` | Yes      | Response message             |
-| `data`     | `object` | Yes      | Response data                   |
-| `data.order_id`     | `string` | Unique order identifier       | 
+| `message`      | `string` | Response message             |
+| `data`         | `object` |  Response data                   |
+| `data.order_id`  | `string` | Unique order identifier       | 
 | `data.status`   | `string` | 	Order status, e.g., RECEIVED      | 
 
 ### Response Example
