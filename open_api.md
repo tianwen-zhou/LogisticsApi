@@ -63,3 +63,28 @@ This API is used to push customer orders to the logistics center system for furt
   "total_amount": 111.97,
   "order_time": "2023-10-01 14:30:00"
 }
+
+## Response Parameters
+
+### Body
+
+| Parameter            | Type     | Description | 
+|----------------------|----------|----------|
+| `code`           | `number` | Status code      | 
+| `message`      | `string` | Yes      | Response message             |
+| `data`     | `object` | Yes      | Response data                   |
+| `data.order_id`     | `string` | Unique order identifier       | 
+| `data.status`   | `string` | 	Order status, e.g., RECEIVED      | 
+
+### Response Example
+
+```json
+{
+  "code": 200,
+  "message": "Order received successfully",
+  "data": {
+    "order_id": "ORD123456",
+    "status": "RECEIVED"
+  }
+}
+
