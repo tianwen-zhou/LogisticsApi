@@ -150,5 +150,3 @@ curl -X POST https://api.xxx.co.nz/v1/orders/push \
 
 ### Notes
 - Replace `<your_token>` with the actual authentication token.
-- Replace `xxx.co.nz` with the actual domain name.
-- Adjust request and response parameters based on actual business requirements.
